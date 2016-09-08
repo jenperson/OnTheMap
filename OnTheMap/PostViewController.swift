@@ -32,6 +32,7 @@ class PostViewController: UIViewController, MKMapViewDelegate {
         
         // add cancel button
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Cancel, target: self, action: #selector(PostViewController.cancel))
+        activityIndicator.hidden = true
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -134,6 +135,7 @@ class PostViewController: UIViewController, MKMapViewDelegate {
     
     // get user data from udacity and post user location to parse
     func sendUserLocation() {
+        activityIndicator.hidden = false
         
         var userData : [String: AnyObject] = [String: AnyObject]()
         
@@ -160,12 +162,14 @@ class PostViewController: UIViewController, MKMapViewDelegate {
                     //send request to parse
                     ClientHelper.sharedInstance().sendUserLocation(userData, completionHandler: { (result, error) -> Void in
                         if error != nil {
+                            self.activityIndicator.hidden = true
                             dispatch_async(dispatch_get_main_queue(), {
                             ClientHelper.sharedInstance().showAlert(error!, viewController: self)
                             })
                         }
                         else {
                             dispatch_async(dispatch_get_main_queue(), {
+                                self.activityIndicator.hidden = true
                                 self.cancel()
                             })
                         }
@@ -173,6 +177,7 @@ class PostViewController: UIViewController, MKMapViewDelegate {
                 })
             } else {
                 if error != nil {
+                        self.activityIndicator.hidden = true
                     dispatch_async(dispatch_get_main_queue(), {
                         ClientHelper.sharedInstance().showAlert(error!, viewController: self)
                     })

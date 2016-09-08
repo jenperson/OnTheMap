@@ -233,7 +233,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="R0U-nA-KW9" userLabel="locationField">
-                                <rect key="frame" x="106.5" y="140" width="200" height="30"/>
+                                <rect key="frame" x="107" y="140" width="200" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="200" id="sDn-o0-cYv"/>
                                 </constraints>
@@ -274,12 +274,13 @@
                                     <constraint firstAttribute="width" constant="374" id="y9n-o6-Kp1"/>
                                 </constraints>
                             </mapView>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Eod-Lc-2rV">
-                                <rect key="frame" x="196" y="231" width="20" height="20"/>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Eod-Lc-2rV">
+                                <rect key="frame" x="197" y="358" width="20" height="20"/>
                             </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="Eod-Lc-2rV" firstAttribute="centerX" secondItem="pHl-bU-8ES" secondAttribute="centerX" id="E07-if-BVd"/>
                             <constraint firstItem="R0U-nA-KW9" firstAttribute="centerX" secondItem="pHl-bU-8ES" secondAttribute="centerX" id="FUK-6N-6zj"/>
                             <constraint firstItem="FhH-Tf-WPq" firstAttribute="top" secondItem="ffr-us-i1V" secondAttribute="bottom" constant="50" id="I2W-Zw-0dx"/>
                             <constraint firstItem="vMM-uj-7Gh" firstAttribute="centerY" secondItem="R0U-nA-KW9" secondAttribute="centerY" id="JFq-pm-luc"/>
@@ -290,6 +291,7 @@
                             <constraint firstItem="R0U-nA-KW9" firstAttribute="top" secondItem="ffr-us-i1V" secondAttribute="bottom" constant="120" id="X7b-jb-ZI3"/>
                             <constraint firstItem="vMM-uj-7Gh" firstAttribute="centerX" secondItem="pHl-bU-8ES" secondAttribute="centerX" id="gBO-s2-p5f"/>
                             <constraint firstItem="FhH-Tf-WPq" firstAttribute="centerX" secondItem="pHl-bU-8ES" secondAttribute="centerX" id="tcV-co-gXu"/>
+                            <constraint firstItem="Eod-Lc-2rV" firstAttribute="centerY" secondItem="pHl-bU-8ES" secondAttribute="centerY" id="x3u-gX-Ifc"/>
                         </constraints>
                     </view>
                     <toolbarItems/>
