@@ -10,12 +10,11 @@ import Foundation
 import MapKit
 
 struct UserInfo {
-    var firstName = " "
-    var lastName = " "
+    var firstName : String
+    var lastName : String
     var latitude : CLLocationDegrees = CLLocationDegrees()
     var longitude : CLLocationDegrees =  CLLocationDegrees()
-    var mediaURL = " "
-    var studentId = " "
+    var mediaURL : String
     
     /* Initial a student information from dictionary */
     init(dictionary: [String : AnyObject]) {

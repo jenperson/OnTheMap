@@ -53,20 +53,23 @@ class PostViewController: UIViewController, MKMapViewDelegate {
     
      // find user location via geocoder
      func getGeocodLocation(address : String) {
-     let geocoder = CLGeocoder()
-     geocoder.geocodeAddressString(address, completionHandler: {(placemarks: [CLPlacemark]?, error: NSError?) -> Void in
-     if error != nil {
-     ClientHelper.sharedInstance().showAlert(error!, viewController: self)
-     } else {
-        self.submitButton.hidden = false
-        self.websiteField.hidden = false
+        activityIndicator.hidden = false
+        let geocoder = CLGeocoder()
+        geocoder.geocodeAddressString(address, completionHandler: {(placemarks: [CLPlacemark]?, error: NSError?) -> Void in
+        if error != nil {
+            ClientHelper.sharedInstance().showAlert(error!, viewController: self)
+            self.activityIndicator.hidden = true
+        } else {
+            self.submitButton.hidden = false
+            self.websiteField.hidden = false
      
-        let placemark = placemarks![0] //as? CLPlacemark {
+            let placemark = placemarks![0]
             self.latitude = placemark.location!.coordinate.latitude
             self.longitude = placemark.location!.coordinate.longitude
             self.placeMarkerOnMap(placemark)
-
-        self.changeVisibility(false)
+        
+            self.activityIndicator.hidden = true
+            self.changeVisibility(false)
      }
      
      })
@@ -123,7 +126,6 @@ class PostViewController: UIViewController, MKMapViewDelegate {
     // go back to map view
     func cancel() {
         self.navigationController?.popToRootViewControllerAnimated(true)
-        self.performSegueWithIdentifier("MapView", sender: self)
     }
     
     // validate url

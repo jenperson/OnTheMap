@@ -95,8 +95,14 @@ extension ClientHelper {
         })
     }
     
+    func removeAnnotations(mapView: MKMapView) {
+        let allAnnotations = mapView.annotations
+        mapView.removeAnnotations(allAnnotations)
+    }
+    
     // set annotations for map with UserInfo
     func createAnnotations(users: [UserInfo], mapView: MKMapView) {
+        
         for user in users {
             // set pin location
             let annotation = MKPointAnnotation()
@@ -140,8 +146,7 @@ extension ClientHelper {
             }
             else {
                 dispatch_async(dispatch_get_main_queue(), {
-                    let loginView : LoginViewController = viewController.storyboard?!.instantiateViewControllerWithIdentifier("LoginView") as! LoginViewController
-                    viewController.presentViewController(loginView, animated: true, completion: nil)
+                    viewController.dismissViewControllerAnimated(true, completion: nil)
                 })
             }
         }

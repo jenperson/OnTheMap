@@ -15,7 +15,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
     
+    /* The app delegate is a singleton, and while it is not good practice to load all data into a
+     'god singleton', this data is used throughout the app so could be considered reasonable at this global level  */
     var sharedSession = NSURLSession.sharedSession()
+    
     var requestToken: String? = nil
     var sessionID: String? = nil
     var userID: Int? = nil
