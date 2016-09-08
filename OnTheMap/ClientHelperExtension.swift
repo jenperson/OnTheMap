@@ -21,7 +21,6 @@ extension ClientHelper {
         let method = Methods.CreateSession
         
         var parameters : [String:String] = [JSONKeys.Password : password]
-
             parameters[JSONKeys.Username] = email
         
         let jsonBody : [String:AnyObject] = [
@@ -33,8 +32,8 @@ extension ClientHelper {
                 completionHandler(result: nil, error: error)
             }
             else {
-                if let errorMsg = result.valueForKey(JSONResponseKeys.Error)  as? String {
-                    completionHandler(result: nil, error: NSError(domain: "udacity login issue", code: 0, userInfo: [NSLocalizedDescriptionKey: errorMsg]))
+                if let error = result.valueForKey(JSONResponseKeys.Error)  as? String {
+                    completionHandler(result: nil, error: NSError(domain: "udacity login issue", code: 0, userInfo: [NSLocalizedDescriptionKey: error]))
                 }
                 else {
                     let session = result["account"] as! NSDictionary
@@ -74,8 +73,8 @@ extension ClientHelper {
             }
             else {
                 if let data = result["user"] as? NSDictionary {
-                    let studentsInfo = PublicUserInfo(dictionary: data)
-                    completionHandler(result: studentsInfo, error: nil)
+                    let studentsData = PublicUserInfo(dictionary: data)
+                    completionHandler(result: studentsData, error: nil)
                 }
             }
         }
@@ -96,7 +95,7 @@ extension ClientHelper {
         })
     }
     
-    // set annotations for map with users data
+    // set annotations for map with UserInfo
     func createAnnotations(users: [UserInfo], mapView: MKMapView) {
         for user in users {
             // set pin location
@@ -110,7 +109,7 @@ extension ClientHelper {
         }
     }
     
-    // logout request from udacity
+    // request logout of udacity
     func logoutRequest(completionHandler: (result: AnyObject?, error: NSError?)->Void) {
         let request = NSMutableURLRequest(URL: NSURL(string: Udacity.ApiScheme + Udacity.ApiHost + Udacity.ApiPath + Methods.CreateSession)!)
         request.HTTPMethod = "DELETE"
@@ -127,13 +126,13 @@ extension ClientHelper {
             if error != nil {
                 completionHandler(result: nil, error: error)
             }
-            let newData = data!.subdataWithRange(NSMakeRange(5, data!.length - 5)) /* subset response data! */
+            let newData = data!.subdataWithRange(NSMakeRange(5, data!.length - 5))
             completionHandler(result: newData, error: nil)
         }
         task.resume()
     }
     
-    // logout user from udacity
+    // log user out of Udacity, return to sign in screen
     func logout(viewController: AnyObject) {
                 logoutRequest { (result, error) -> Void in
             if error != nil {
