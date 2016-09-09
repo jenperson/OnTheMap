@@ -45,6 +45,19 @@
                                     </textField>
                                     <view contentMode="scaleToFill" verticalHuggingPriority="248" translatesAutoresizingMaskIntoConstraints="NO" id="AFf-uP-MCt" userLabel="Margin">
                                         <rect key="frame" x="0.0" y="298" width="414" height="51"/>
+                                        <subviews>
+                                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="zgf-Y9-8we">
+                                                <rect key="frame" x="192" y="16" width="30" height="40"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="30" id="Azl-dC-Tyf"/>
+                                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="40" id="HGN-va-fBK"/>
+                                                </constraints>
+                                            </activityIndicatorView>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstItem="zgf-Y9-8we" firstAttribute="centerX" secondItem="AFf-uP-MCt" secondAttribute="centerX" id="P3T-MB-fTw"/>
+                                            <constraint firstItem="zgf-Y9-8we" firstAttribute="top" secondItem="AFf-uP-MCt" secondAttribute="top" constant="16" id="SSg-j0-O2G"/>
+                                        </constraints>
                                     </view>
                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FqB-3k-SUZ">
                                         <rect key="frame" x="0.0" y="349" width="414" height="50"/>
@@ -141,6 +154,7 @@
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="zgf-Y9-8we" id="4Gw-zR-g2y"/>
                         <outlet property="debugLabel" destination="i60-2T-3Ea" id="Fgp-Wa-dJP"/>
                         <outlet property="loginButton" destination="F3n-oG-V8j" id="dtf-J5-SX3"/>
                         <outlet property="passwordField" destination="7dP-1S-TeV" id="VSI-ef-gay"/>
@@ -182,7 +196,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cIF-w4-7MR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2935" y="473"/>
+            <point key="canvasLocation" x="2503" y="513"/>
         </scene>
         <!--Map View Controller-->
         <scene sceneID="pjr-c6-Yqq">
@@ -218,7 +232,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TAD-AE-NjM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2907" y="-305"/>
+            <point key="canvasLocation" x="2465" y="-309"/>
         </scene>
         <!--Post View-->
         <scene sceneID="nae-5W-40v">
@@ -277,6 +291,16 @@
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Eod-Lc-2rV">
                                 <rect key="frame" x="197" y="358" width="20" height="20"/>
                             </activityIndicatorView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v8b-5i-Amd">
+                                <rect key="frame" x="10" y="10" width="62" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="62" id="42w-Vz-f7v"/>
+                                </constraints>
+                                <state key="normal" title="Cancel"/>
+                                <connections>
+                                    <action selector="cancelPressed:" destination="ED7-BT-U3W" eventType="touchUpInside" id="BJO-ID-kJg"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -287,10 +311,12 @@
                             <constraint firstItem="ql5-ob-u2e" firstAttribute="top" secondItem="R0U-nA-KW9" secondAttribute="bottom" constant="28" id="JNV-gW-q5M"/>
                             <constraint firstItem="l7Q-Ee-vGr" firstAttribute="top" secondItem="Kc7-Pb-gTp" secondAttribute="bottom" id="LTy-bz-cRa"/>
                             <constraint firstItem="Kc7-Pb-gTp" firstAttribute="centerX" secondItem="pHl-bU-8ES" secondAttribute="centerX" id="ODz-ht-nly"/>
+                            <constraint firstItem="v8b-5i-Amd" firstAttribute="top" secondItem="pHl-bU-8ES" secondAttribute="topMargin" constant="10" id="QS6-8K-rPd"/>
                             <constraint firstItem="ql5-ob-u2e" firstAttribute="centerX" secondItem="pHl-bU-8ES" secondAttribute="centerX" id="Vzm-WF-4Lv"/>
                             <constraint firstItem="R0U-nA-KW9" firstAttribute="top" secondItem="ffr-us-i1V" secondAttribute="bottom" constant="120" id="X7b-jb-ZI3"/>
                             <constraint firstItem="vMM-uj-7Gh" firstAttribute="centerX" secondItem="pHl-bU-8ES" secondAttribute="centerX" id="gBO-s2-p5f"/>
                             <constraint firstItem="FhH-Tf-WPq" firstAttribute="centerX" secondItem="pHl-bU-8ES" secondAttribute="centerX" id="tcV-co-gXu"/>
+                            <constraint firstItem="v8b-5i-Amd" firstAttribute="leading" secondItem="pHl-bU-8ES" secondAttribute="leadingMargin" constant="-10" id="wS9-3k-eEZ"/>
                             <constraint firstItem="Eod-Lc-2rV" firstAttribute="centerY" secondItem="pHl-bU-8ES" secondAttribute="centerY" id="x3u-gX-Ifc"/>
                         </constraints>
                     </view>
@@ -305,12 +331,11 @@
                         <outlet property="studyLabel" destination="FhH-Tf-WPq" id="1wQ-6a-GbV"/>
                         <outlet property="submitButton" destination="ql5-ob-u2e" id="lK7-lR-Hxc"/>
                         <outlet property="websiteField" destination="vMM-uj-7Gh" id="CjM-5L-Sao"/>
-                        <segue destination="pZF-Az-q9Y" kind="showDetail" identifier="MapView" id="VGG-3i-JfK"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9yb-Yh-2Vn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="551" y="1569"/>
+            <point key="canvasLocation" x="551" y="1161"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="Rvr-JD-SWQ">

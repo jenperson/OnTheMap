@@ -41,8 +41,8 @@ extension ClientHelper {
     struct ParseParameterKeys {
         static let ApiKey = "api_key"
         static let AppID = "app_id"
-        static let RequestToken = "request_token"
-        static let SessionID = "session_id"
+        //static let RequestToken = "request_token"
+        //static let SessionID = "session_id"
         static let Username = "username"
         static let Password = "password"
     }

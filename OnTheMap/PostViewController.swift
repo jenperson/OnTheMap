@@ -29,15 +29,12 @@ class PostViewController: UIViewController, MKMapViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // add cancel button
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Cancel, target: self, action: #selector(PostViewController.cancel))
         activityIndicator.hidden = true
     }
     
     override func viewWillAppear(animated: Bool) {
         changeVisibility(true)
-
+        
         self.navigationItem.hidesBackButton = true
     }
     
@@ -123,9 +120,13 @@ class PostViewController: UIViewController, MKMapViewDelegate {
         }
     }
     
+    @IBAction func cancelPressed(sender: AnyObject) {
+        self.cancel()
+    }
+    
     // go back to map view
     func cancel() {
-        self.navigationController?.popToRootViewControllerAnimated(true)
+        dismissViewControllerAnimated(true, completion: nil)
     }
     
     // validate url
@@ -141,9 +142,7 @@ class PostViewController: UIViewController, MKMapViewDelegate {
         
         var userData : [String: AnyObject] = [String: AnyObject]()
         
-        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        
-        ClientHelper.sharedInstance().getUserPublicData(appDelegate.studentKey, completionHandler: { userInformation, error in
+        ClientHelper.sharedInstance().getUserPublicData(ClientHelper.sharedInstance().studentKey, completionHandler: { userInformation, error in
             if userInformation != nil {
                 dispatch_async(dispatch_get_main_queue(), {
                     
@@ -151,7 +150,7 @@ class PostViewController: UIViewController, MKMapViewDelegate {
                     if let firstName = userInformation?.firstName {
                     
                     userData  = [
-                        ClientHelper.JSONKeys.UniqueKey: appDelegate.studentKey,
+                        ClientHelper.JSONKeys.UniqueKey: ClientHelper.sharedInstance().studentKey,
                         ClientHelper.JSONKeys.FirstName: firstName,
                         ClientHelper.JSONKeys.LastName: userInformation!.lastName,
                         ClientHelper.JSONKeys.MapString: self.locationField.text!,

@@ -37,7 +37,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
     func addPin() {
         let postController:UIViewController = self.storyboard!.instantiateViewControllerWithIdentifier("Study Location")
-            self.navigationController?.pushViewController(postController, animated: true)
+            self.navigationController?.presentViewController(postController, animated: true, completion: nil)
     }
     
     func reloadAction() {
@@ -46,14 +46,12 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
     //reload users data
     func reloadUsersData() {
-        
         ClientHelper.sharedInstance().removeAnnotations(self.map)
         
         ClientHelper.sharedInstance().getStudentLocations { users, error in
             if let usersData =  users {
                 dispatch_async(dispatch_get_main_queue(), {
-                    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-                    appDelegate.usersData = usersData
+                    ClientHelper.sharedInstance().usersData = usersData
                     ClientHelper.sharedInstance().createAnnotations(usersData, mapView: self.map)
                 })
             } else {
@@ -86,7 +84,11 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     // click to pin
     func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         // open url
-        ClientHelper.sharedInstance().openURL(view.annotation!.subtitle!!)
+        if let pinURL = view.annotation?.subtitle {
+        ClientHelper.sharedInstance().openURL(pinURL!)
+        } else {
+            print("URL not valid")
+        }
     }
     
     func logout() {

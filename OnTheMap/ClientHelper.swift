@@ -13,6 +13,9 @@ class ClientHelper: NSObject {
     /* Shared session */
     var session: NSURLSession
     
+    var studentKey = ""
+    var usersData : [UserInfo] = [UserInfo]()
+    
     override init() {
         session = NSURLSession.sharedSession()
         super.init()

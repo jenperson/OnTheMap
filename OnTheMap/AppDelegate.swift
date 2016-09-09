@@ -14,18 +14,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: Properties
     
     var window: UIWindow?
-    
-    /* The app delegate is a singleton, and while it is not good practice to load all data into a
-     'god singleton', this data is used throughout the app so could be considered reasonable at this global level  */
-    var sharedSession = NSURLSession.sharedSession()
-    
-    var requestToken: String? = nil
-    var sessionID: String? = nil
-    var userID: Int? = nil
-    
-    var studentKey = ""
-    var usersData : [UserInfo] = [UserInfo]()
-
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.

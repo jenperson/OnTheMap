@@ -47,8 +47,8 @@ extension ClientHelper {
     // download student locations
     func getStudentLocations(completionHandler: (result: [UserInfo]?, error: NSError?) -> Void) {
         // make the request
-        taskForGETMethod(Server.Parse, method: Methods.limit, parameters: ["limit":100]) { (result, error) -> Void in
-            if error != nil {
+        taskForGETMethod(Server.Parse, method: Methods.limit, parameters: ["limit":100,"order":"-updatedAt"]) { (result, error) -> Void in
+            if error != nil || result == nil {
                 completionHandler(result: nil, error: error)
             } else {
                 if let locations = result as? [NSObject: NSObject] {

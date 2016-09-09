@@ -35,7 +35,7 @@ class TableViewController: UITableViewController {
     //action - add location for current user
     func addPin() {
         let postController:UIViewController = self.storyboard!.instantiateViewControllerWithIdentifier("Study Location")
-            self.navigationController?.pushViewController(postController, animated: true)
+            self.navigationController?.presentViewController(postController, animated: true, completion: nil)
     }
     
     //action - reload users location
@@ -54,8 +54,7 @@ class TableViewController: UITableViewController {
         ClientHelper.sharedInstance().getStudentLocations { users, error in
             if let usersData =  users {
                 dispatch_async(dispatch_get_main_queue(), {
-                    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-                    appDelegate.usersData = usersData
+                    ClientHelper.sharedInstance().usersData = usersData
                     self.mainTable.reloadData()
                 })
             } else {
@@ -69,7 +68,7 @@ class TableViewController: UITableViewController {
     // MARK: - tableView functions
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return appDelegate.usersData.count
+        return ClientHelper.sharedInstance().usersData.count
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -77,8 +76,8 @@ class TableViewController: UITableViewController {
 
         
         // set cell data
-        let lastName = appDelegate.usersData[indexPath.row].lastName
-        let firstName = appDelegate.usersData[indexPath.row].firstName
+        let lastName = ClientHelper.sharedInstance().usersData[indexPath.row].lastName
+        let firstName = ClientHelper.sharedInstance().usersData[indexPath.row].firstName
 
 
         
@@ -90,7 +89,7 @@ class TableViewController: UITableViewController {
     
     // open selected url in safari
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        ClientHelper.sharedInstance().openURL(appDelegate.usersData[indexPath.row].mediaURL)
+        ClientHelper.sharedInstance().openURL(ClientHelper.sharedInstance().usersData[indexPath.row].mediaURL)
     }
     
     func logout() {

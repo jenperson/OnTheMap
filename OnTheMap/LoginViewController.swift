@@ -17,6 +17,7 @@ class LoginViewController: UIViewController {
     
     // MARK: Outlets
     
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var usernameField: UITextField!
     @IBOutlet weak var passwordField: UITextField!
     @IBOutlet weak var loginButton: RounderButton!
@@ -33,10 +34,13 @@ class LoginViewController: UIViewController {
         // Configure keyboard to disappear when tapping outside of it
         tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(LoginViewController.handleSingleTap(_:)))
         tapRecognizer?.numberOfTapsRequired = 1
+        
+        // Hide activity indicator
+        self.activityIndicator.hidden = true
+        self.activityIndicator.hidesWhenStopped = true
     }
     
     override func viewWillAppear(animated: Bool) {
-        
         self.addKeyboardDismissRecognizer()
         self.subscribeToKeyboardNotifications()
     }
@@ -49,6 +53,7 @@ class LoginViewController: UIViewController {
     }
 
     @IBAction func LoginButtonPressed(sender: AnyObject) {
+        self.activityIndicator.startAnimating()
         
         let username = usernameField.text
         let password = passwordField.text
@@ -58,15 +63,16 @@ class LoginViewController: UIViewController {
             
             if error != nil {
                 dispatch_async(dispatch_get_main_queue(), {
+                    self.activityIndicator.stopAnimating()
                     ClientHelper.sharedInstance().showAlert(error!, viewController: self)
                 })
             }
             else {
                 // show map tab view
-                let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-                appDelegate.studentKey = result!
+                
+                ClientHelper.sharedInstance().studentKey = result!
                 dispatch_async(dispatch_get_main_queue(), {
-                    print("OK - key = \(appDelegate.studentKey)")
+                    print("OK - key = \(ClientHelper.sharedInstance().studentKey)")
                     // log in, go to next view
                     self.goToNextView()
                 })
@@ -76,6 +82,7 @@ class LoginViewController: UIViewController {
     
     // go to next view
     func goToNextView() {
+        self.activityIndicator.stopAnimating()
         let tabBarController:UITabBarController = self.storyboard!.instantiateViewControllerWithIdentifier("tabBarController") as! UITabBarController
         self.presentViewController(tabBarController, animated: true, completion: nil)
     }
