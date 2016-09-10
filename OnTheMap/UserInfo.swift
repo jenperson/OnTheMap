@@ -15,6 +15,7 @@ struct UserInfo {
     var latitude : CLLocationDegrees = CLLocationDegrees()
     var longitude : CLLocationDegrees =  CLLocationDegrees()
     var mediaURL : String
+    //var usersData: [UserInfo] = [UserInfo]()
     
     /* Initial a student information from dictionary */
     init(dictionary: [String : AnyObject]) {
@@ -37,4 +38,12 @@ struct UserInfo {
         
         return resultArray
     }
+}
+
+class AllUsersInfo {
+    
+    var listOfStudents : [UserInfo] = []
+    var studentKey = ""
+    
+    static let sharedInstance = AllUsersInfo()
 }

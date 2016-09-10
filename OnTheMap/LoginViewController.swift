@@ -41,6 +41,8 @@ class LoginViewController: UIViewController {
     }
     
     override func viewWillAppear(animated: Bool) {
+        usernameField.text = ""
+        passwordField.text = ""
         self.addKeyboardDismissRecognizer()
         self.subscribeToKeyboardNotifications()
     }
@@ -70,9 +72,9 @@ class LoginViewController: UIViewController {
             else {
                 // show map tab view
                 
-                ClientHelper.sharedInstance().studentKey = result!
+                AllUsersInfo.sharedInstance.studentKey = result!
                 dispatch_async(dispatch_get_main_queue(), {
-                    print("OK - key = \(ClientHelper.sharedInstance().studentKey)")
+                    print("OK - key = \(AllUsersInfo.sharedInstance.studentKey)")
                     // log in, go to next view
                     self.goToNextView()
                 })

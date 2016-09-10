@@ -142,7 +142,7 @@ class PostViewController: UIViewController, MKMapViewDelegate {
         
         var userData : [String: AnyObject] = [String: AnyObject]()
         
-        ClientHelper.sharedInstance().getUserPublicData(ClientHelper.sharedInstance().studentKey, completionHandler: { userInformation, error in
+        ClientHelper.sharedInstance().getUserPublicData(AllUsersInfo.sharedInstance.studentKey, completionHandler: { userInformation, error in
             if userInformation != nil {
                 dispatch_async(dispatch_get_main_queue(), {
                     
@@ -150,7 +150,7 @@ class PostViewController: UIViewController, MKMapViewDelegate {
                     if let firstName = userInformation?.firstName {
                     
                     userData  = [
-                        ClientHelper.JSONKeys.UniqueKey: ClientHelper.sharedInstance().studentKey,
+                        ClientHelper.JSONKeys.UniqueKey: AllUsersInfo.sharedInstance.studentKey,
                         ClientHelper.JSONKeys.FirstName: firstName,
                         ClientHelper.JSONKeys.LastName: userInformation!.lastName,
                         ClientHelper.JSONKeys.MapString: self.locationField.text!,

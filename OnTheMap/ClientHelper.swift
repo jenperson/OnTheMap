@@ -13,9 +13,6 @@ class ClientHelper: NSObject {
     /* Shared session */
     var session: NSURLSession
     
-    var studentKey = ""
-    var usersData : [UserInfo] = [UserInfo]()
-    
     override init() {
         session = NSURLSession.sharedSession()
         super.init()
@@ -50,23 +47,42 @@ class ClientHelper: NSObject {
         
         /* Make the request */
         let task = session.dataTaskWithRequest(request) {data, response, downloadError in
-            
+
             /* Parse the data and use the data (happens in completion handler) */
-            if downloadError != nil {
+            // Guard for Error
+            guard (downloadError == nil) else {
                 completionHandler(result: nil, error: downloadError)
-            } else {
+                return
+            }
+            
+            // If not successful response
+            if let statusCode = (response as? NSHTTPURLResponse)?.statusCode where statusCode < 200 || statusCode > 299  {
+                let message = [NSLocalizedDescriptionKey: "No Response."]
+                let error = NSError(domain: "APISession", code: statusCode, userInfo: message)
+                completionHandler(result: nil, error: error)
+                return
+            }
+            
+            // Guard for data
+            guard let data = data else {
+                let statusCode = 404
+                let message = [NSLocalizedDescriptionKey: "Data."]
+                let error = NSError(domain: "APISession", code: statusCode, userInfo: message)
+                completionHandler(result: nil, error: error)
+                return
+            }
                 var newData: NSData?
                 newData = nil
                 if (server == Server.Udacity) {
-                    newData = data!.subdataWithRange(NSMakeRange(5, data!.length - 5))
+                    newData = data.subdataWithRange(NSMakeRange(5, data.length - 5))
                 }
                 if newData != nil {
                     ClientHelper.parseJSONWithCompletionHandler(newData!, completionHandler: completionHandler)
                 }
                 else {
-                    ClientHelper.parseJSONWithCompletionHandler(data!, completionHandler: completionHandler)
+                    ClientHelper.parseJSONWithCompletionHandler(data, completionHandler: completionHandler)
                 }
-            }
+            
         }
         
         /* Start the request */
@@ -114,23 +130,40 @@ class ClientHelper: NSObject {
         
         /* Make the request */
         let task = session.dataTaskWithRequest(request) {data, response, downloadError in
-
-            /* Parse the data and use the data (happens in completion handler) */
-            if downloadError != nil {
+            
+            guard (downloadError == nil) else {
                 completionHandler(result: nil, error: downloadError)
-            } else {
+                return
+            }
+            
+            // If not successful response
+            if let statusCode = (response as? NSHTTPURLResponse)?.statusCode where statusCode < 200 && statusCode > 299 || statusCode == 403 {
+                let message = [NSLocalizedDescriptionKey: "No Response."]
+                let error = NSError(domain: "APISession", code: statusCode, userInfo: message)
+                completionHandler(result: nil, error: error)
+                return
+            }
+            
+            // Guard for data
+            guard let data = data else {
+                let statusCode = 404
+                let message = [NSLocalizedDescriptionKey: "Data."]
+                let error = NSError(domain: "APISession", code: statusCode, userInfo: message)
+                completionHandler(result: nil, error: error)
+                return
+            }
                 var newData: NSData?
                 newData = nil
                 if subdata > 0 {
-                    newData = data!.subdataWithRange(NSMakeRange(subdata, data!.length - subdata))
+                    newData = data.subdataWithRange(NSMakeRange(subdata, data.length - subdata))
                 }
                 if newData != nil {
                     ClientHelper.parseJSONWithCompletionHandler(newData!, completionHandler: completionHandler)
                 }
                 else {
-                    ClientHelper.parseJSONWithCompletionHandler(data!, completionHandler: completionHandler)
+                    ClientHelper.parseJSONWithCompletionHandler(data, completionHandler: completionHandler)
                 }
-            }
+            
         }
         
         /* Start the request */
@@ -202,6 +235,8 @@ class ClientHelper: NSObject {
         
         viewController.presentViewController(alert, animated: true, completion: nil)
     }
+
+    
     
     func openURL(urlString: String) {
         let url = NSURL(string: urlString)

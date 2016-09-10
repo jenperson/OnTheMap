@@ -54,7 +54,7 @@ class TableViewController: UITableViewController {
         ClientHelper.sharedInstance().getStudentLocations { users, error in
             if let usersData =  users {
                 dispatch_async(dispatch_get_main_queue(), {
-                    ClientHelper.sharedInstance().usersData = usersData
+                    AllUsersInfo.sharedInstance.listOfStudents = usersData
                     self.mainTable.reloadData()
                 })
             } else {
@@ -68,7 +68,7 @@ class TableViewController: UITableViewController {
     // MARK: - tableView functions
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return ClientHelper.sharedInstance().usersData.count
+        return AllUsersInfo.sharedInstance.listOfStudents.count
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -76,8 +76,8 @@ class TableViewController: UITableViewController {
 
         
         // set cell data
-        let lastName = ClientHelper.sharedInstance().usersData[indexPath.row].lastName
-        let firstName = ClientHelper.sharedInstance().usersData[indexPath.row].firstName
+        let lastName = AllUsersInfo.sharedInstance.listOfStudents[indexPath.row].lastName
+        let firstName = AllUsersInfo.sharedInstance.listOfStudents[indexPath.row].firstName
 
 
         
@@ -89,7 +89,7 @@ class TableViewController: UITableViewController {
     
     // open selected url in safari
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        ClientHelper.sharedInstance().openURL(ClientHelper.sharedInstance().usersData[indexPath.row].mediaURL)
+        ClientHelper.sharedInstance().openURL(AllUsersInfo.sharedInstance.listOfStudents[indexPath.row].mediaURL)
     }
     
     func logout() {

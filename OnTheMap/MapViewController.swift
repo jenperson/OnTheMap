@@ -49,10 +49,10 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         ClientHelper.sharedInstance().removeAnnotations(self.map)
         
         ClientHelper.sharedInstance().getStudentLocations { users, error in
-            if let usersData =  users {
+            if let userData =  users {
                 dispatch_async(dispatch_get_main_queue(), {
-                    ClientHelper.sharedInstance().usersData = usersData
-                    ClientHelper.sharedInstance().createAnnotations(usersData, mapView: self.map)
+                    AllUsersInfo.sharedInstance.listOfStudents = userData
+                    ClientHelper.sharedInstance().createAnnotations(userData, mapView: self.map)
                 })
             } else {
                 if error != nil {
